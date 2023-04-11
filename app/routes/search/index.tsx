@@ -1,18 +1,29 @@
 import { json } from "@remix-run/node";
 
 import type { LoaderArgs } from "@remix-run/node";
+import type { City } from "~/types/weather";
 
 export const loader = async ({ request }: LoaderArgs) => {
+  // Load environment variables
+  const { API_URL, API_KEY } = process.env;
+
   // Get the "city" query search parameter
   const url = new URL(request.url);
   const query = url.searchParams.get("city");
 
-  // Search the languages, you can go look at `app/langs.ts` to see what it's
-  // doing, but this part will obviously be different for your app.
+  // Query the Weather API
+  const res = await fetch(`${API_URL}/search.json?key=${API_KEY}&q=${query}`);
+  const data: Array<City> = await res.json();
+
   console.log("Searching for", query);
 
-  return json({
-    data: { city: query },
-    headers: { "Cache-Control": "max-age=60" },
-  });
+  return json(
+    data.map((city) => {
+      return {
+        name: city.name,
+        country: city.country,
+        url: city.url,
+      };
+    })
+  );
 };
