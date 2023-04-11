@@ -1,6 +1,6 @@
-import { json } from "@remix-run/node";
+import { json } from "@vercel/remix";
 
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderArgs } from "@vercel/remix";
 import type { City } from "~/types/weather";
 
 export const loader = async ({ request }: LoaderArgs) => {

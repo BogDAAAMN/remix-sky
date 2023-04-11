@@ -9,7 +9,7 @@ import {
 
 import styles from "~/styles/tailwind.css";
 
-import type { MetaFunction, LinksFunction } from "@remix-run/node";
+import type { MetaFunction, LinksFunction } from "@vercel/remix";
 
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
 
